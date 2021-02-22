@@ -40,6 +40,8 @@ import java.io.File;
 
 import androidx.multidex.MultiDex;
 
+import ir.tapsell.sdk.Tapsell;
+
 public class ApplicationLoader extends Application {
 
     @SuppressLint("StaticFieldLeak")
@@ -50,6 +52,7 @@ public class ApplicationLoader extends Application {
     private static ConnectivityManager connectivityManager;
     private static volatile boolean applicationInited = false;
 
+    public static final String TAP_SELL_KEY = "pmknlahpccnolkqgdlnqjotpfbttmrlcepfasjtlqgrnsthkqojrojccaptknqrmioojam";
     public static long startTime;
 
     public static volatile boolean isScreenOn = false;
@@ -212,6 +215,7 @@ public class ApplicationLoader extends Application {
         applicationHandler = new Handler(applicationContext.getMainLooper());
 
         AndroidUtilities.runOnUIThread(ApplicationLoader::startPushService);
+        Tapsell.initialize(this, TAP_SELL_KEY);
     }
 
     public static void startPushService() {
@@ -232,7 +236,7 @@ public class ApplicationLoader extends Application {
             applicationContext.stopService(new Intent(applicationContext, NotificationsService.class));
 
             PendingIntent pintent = PendingIntent.getService(applicationContext, 0, new Intent(applicationContext, NotificationsService.class), 0);
-            AlarmManager alarm = (AlarmManager)applicationContext.getSystemService(Context.ALARM_SERVICE);
+            AlarmManager alarm = (AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE);
             alarm.cancel(pintent);
         }
     }

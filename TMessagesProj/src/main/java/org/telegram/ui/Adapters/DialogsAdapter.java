@@ -10,6 +10,7 @@ package org.telegram.ui.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
@@ -17,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -40,6 +42,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
+import org.telegram.own.ui.cell.DialogAddCell;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
@@ -254,6 +257,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
             count += 1;
         }
         currentCount = count;
+        count++;
         return count;
     }
 
@@ -564,6 +568,10 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
             default: {
                 view = new TextCell(mContext);
             }
+            case 15: {
+                DialogAddCell dialogAddCell = new DialogAddCell(mContext);
+                view = new DialogAddCell(mContext);
+            }
         }
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, viewType == 5 ? RecyclerView.LayoutParams.MATCH_PARENT : RecyclerView.LayoutParams.WRAP_CONTENT));
         return new RecyclerListView.Holder(view);
@@ -588,6 +596,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
                 if (preloader != null && i < 10) {
                     preloader.add(dialog.id);
                 }
+                Log.d("tttt", "norm: "+cell.getHeight());
                 break;
             }
             case 5: {
@@ -654,11 +663,20 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
                 cell.setOffsetFromImage(75);
                 break;
             }
+            case 15:
+                DialogAddCell cell = (DialogAddCell) holder.itemView;
+                cell.setBackgroundColor(Color.BLACK);
+                Log.d("tttt", "onBindViewHolder: "+cell.getHeight());
+                break;
+
         }
     }
 
     @Override
     public int getItemViewType(int i) {
+        if (i == 0) {
+            return 15;
+        }
         if (onlineContacts != null) {
             if (dialogsCount == 0) {
                 if (i == 0) {
@@ -848,7 +866,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
 
         private boolean preloadIsAvilable() {
             return false;
-           // return DownloadController.getInstance(UserConfig.selectedAccount).getCurrentDownloadMask() != 0;
+            // return DownloadController.getInstance(UserConfig.selectedAccount).getCurrentDownloadMask() != 0;
         }
 
         public void updateList() {
