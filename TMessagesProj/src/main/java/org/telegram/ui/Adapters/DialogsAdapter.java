@@ -579,6 +579,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int i) {
+        i = i - 1;
         switch (holder.getItemViewType()) {
             case 0: {
                 DialogCell cell = (DialogCell) holder.itemView;
