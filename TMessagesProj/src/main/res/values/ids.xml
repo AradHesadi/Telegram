@@ -29,4 +29,6 @@
     <item name="passcode_btn_0" type="id"/>
     <item name="passcode_btn_backspace" type="id"/>
     <item name="passcode_btn_done" type="id"/>
+
+    <item name="ad_view" type="id"/>
 </resources>
