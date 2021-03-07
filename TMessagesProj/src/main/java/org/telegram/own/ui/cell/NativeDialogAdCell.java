@@ -3,14 +3,18 @@ package org.telegram.own.ui.cell;
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import org.telegram.messenger.R;
+import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.LayoutHelper;
 
 import ir.tapsell.sdk.TapsellAdRequestListener;
+import ir.tapsell.sdk.nativeads.TapsellNativeBanner;
 import ir.tapsell.sdk.nativeads.TapsellNativeBannerManager;
 import ir.tapsell.sdk.nativeads.TapsellNativeBannerViewManager;
 
@@ -23,7 +27,7 @@ public class NativeDialogAdCell extends FrameLayout {
     public NativeDialogAdCell(@NonNull Context context) {
         super(context);
         this.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
-        this.setPadding(0,16,16,0);
+        this.setPadding(0, 16, 16, 0);
         setAdView(context);
         requestAd(context);
     }
@@ -32,7 +36,7 @@ public class NativeDialogAdCell extends FrameLayout {
         nativeBannerViewManager = new TapsellNativeBannerManager
                 .Builder()
                 .setParentView(this)
-                .setContentViewTemplate(R.layout.test2)
+                .setContentViewTemplate(R.layout.test)
                 .inflateTemplate(context);
     }
 
@@ -45,6 +49,7 @@ public class NativeDialogAdCell extends FrameLayout {
                         Log.d("tttt", s);
                         adId = s;
                         showAd(context);
+                        initUI();
                     }
 
                     @Override
@@ -61,5 +66,18 @@ public class NativeDialogAdCell extends FrameLayout {
                 LIST_NATIVE_ZONE_ID,
                 adId);
         Log.d("tttt", "showAd: ");
+    }
+
+    private void initUI() {
+        TextView titleTextView = findViewById(R.id.tapsell_nativead_title);
+        titleTextView.setTextColor(Theme.getColor(Theme.key_chats_message));
+        TextView descriptionTextView = findViewById(R.id.tapsell_nativead_description);
+        descriptionTextView.setTextColor(Theme.getColor(Theme.key_chats_message));
+        FrameLayout divider = findViewById(R.id.ad_divider);
+        divider.setBackgroundColor(Theme.getColor(Theme.key_divider));
+        TextView sponsoredTextView = findViewById(R.id.tapsell_nativead_sponsored);
+        sponsoredTextView.setBackgroundColor(Theme.getColor(Theme.key_dialogRoundCheckBox));
+        sponsoredTextView.setTextColor(Theme.getColor(Theme.key_dialogRoundCheckBoxCheck));
+        Log.d("tttt", "configureUI: ");
     }
 }

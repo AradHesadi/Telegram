@@ -1,81 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tapsell_nativead_cta_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/rvHeader"
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded">
+
+    <ImageView
+        android:id="@id/tapsell_nativead_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/logo" />
+
+    <TextView
+        android:id="@id/tapsell_nativead_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toStartOf="@id/tapsell_nativead_logo"
+        android:layout_toEndOf="@+id/tapsell_nativead_sponsored"
+        android:gravity="start"
+        android:paddingEnd="4dp"
+        android:text="@string/title"
+        android:textSize="20sp"
+        android:layout_toLeftOf="@id/tapsell_nativead_logo"
+        android:layout_toRightOf="@+id/tapsell_nativead_sponsored"
+        android:paddingRight="4dp" />
+
+    <TextView
+        android:id="@id/tapsell_nativead_sponsored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:padding="3dp"
+        android:text="@string/ad"
+        android:textSize="12sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@id/tapsell_nativead_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tapsell_nativead_title"
+        android:layout_marginBottom="12dp"
+        android:layout_toStartOf="@+id/tapsell_nativead_logo"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingEnd="4dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="@string/ad_description"
+        android:textSize="16sp"
+        tools:ignore="RtlSymmetry"
+        android:layout_toLeftOf="@+id/tapsell_nativead_logo"
+        android:paddingRight="4dp" />
 
-        <ImageView
-            android:id="@id/tapsell_nativead_logo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="Logo" />
-
-        <TextView
-            android:id="@id/tapsell_nativead_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toLeftOf="@id/tapsell_nativead_logo"
-            android:layout_toRightOf="@+id/tapsell_nativead_sponsored"
-            android:gravity="right"
-            android:paddingRight="4dp"
-            android:text="Title"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@id/tapsell_nativead_sponsored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="22dp"
-            android:background="#dedede"
-            android:padding="3dp"
-            android:text="آگهی"
-            android:textColor="#aaaaaa"
-            android:textSize="9sp" />
-
-        <TextView
-            android:id="@id/tapsell_nativead_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tapsell_nativead_title"
-            android:layout_marginBottom="12dp"
-            android:layout_toLeftOf="@+id/tapsell_nativead_logo"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:freezesText="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingRight="4dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="توضیحات این تبلیغ"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="68dp"
-            android:background="@color/divider" />
-
-    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/ad_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="68dp"
+        android:background="@color/divider"
+        android:layout_marginRight="68dp" />
 
 </RelativeLayout>

@@ -5868,6 +5868,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             if (currentConnectionState != state) {
                 currentConnectionState = state;
                 updateProxyButton(true);
+                for (int a = 0; a < viewPages.length; a++) {
+                    viewPages[a].dialogsAdapter.notifyItemChanged(0);
+                    viewPages[a].dialogsAdapter.notifyDataSetChanged();
+                }
             }
         } else if (id == NotificationCenter.needDeleteDialog) {
             if (fragmentView == null || isPaused) {

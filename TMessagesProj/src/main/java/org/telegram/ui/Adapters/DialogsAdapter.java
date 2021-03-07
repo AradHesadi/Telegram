@@ -40,6 +40,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
+import org.telegram.own.ui.cell.DialogAdCell;
 import org.telegram.own.ui.cell.NativeDialogAdCell;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
@@ -81,6 +82,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
     private boolean isOnlySelect;
     private ArrayList<Long> selectedDialogs;
     private boolean hasHints;
+    private boolean hasAdvertisement;
     private int currentAccount;
     private boolean dialogsListFrozen;
     private boolean showArchiveHint;
@@ -105,6 +107,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
         folderId = folder;
         isOnlySelect = onlySelect;
         hasHints = folder == 0 && type == 0 && !onlySelect;
+        hasAdvertisement = !onlySelect;
         selectedDialogs = selected;
         currentAccount = account;
         if (folderId == 1) {
@@ -131,6 +134,9 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
     public int fixPosition(int position) {
         if (hasHints) {
             position -= 2 + MessagesController.getInstance(currentAccount).hintDialogs.size();
+        }
+        if (hasAdvertisement) {
+            position -=1;
         }
         if (showArchiveHint) {
             position -= 2;
@@ -254,7 +260,8 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
         } else if (dialogsType == 12) {
             count += 1;
         }
-        count++;
+        if (hasAdvertisement)
+            count +=1;
         currentCount = count;
         return count;
     }
@@ -276,6 +283,9 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
         } else if (dialogsType == 11 || dialogsType == 13) {
             i -= 2;
         } else if (dialogsType == 12) {
+            i -= 1;
+        }
+        if (hasAdvertisement) {
             i -= 1;
         }
         ArrayList<TLRPC.Dialog> arrayList = parentFragment.getDialogsArray(currentAccount, dialogsType, folderId, dialogsListFrozen);
@@ -562,14 +572,13 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
                 view.setBackgroundDrawable(combinedDrawable);
                 break;
             }
-            case 12:
-            default: {
-                view = new TextCell(mContext);
-                break;
-            }
             case 13: {
                 view = new NativeDialogAdCell(mContext);
                 break;
+            }
+            case 12:
+            default: {
+                view = new TextCell(mContext);
             }
         }
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, viewType == 5 ? RecyclerView.LayoutParams.MATCH_PARENT : RecyclerView.LayoutParams.WRAP_CONTENT));
@@ -666,8 +675,11 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
 
     @Override
     public int getItemViewType(int i) {
-        if (i == 1) {
-            return 13;
+        if (hasAdvertisement) {
+            if (i == 0) {
+                return 13;
+            } else
+                i -= 1;
         }
         if (onlineContacts != null) {
             if (dialogsCount == 0) {
