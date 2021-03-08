@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import org.telegram.messenger.FileLog;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.LayoutHelper;
@@ -70,7 +71,7 @@ public class NativeDialogAdCell extends FrameLayout {
 
     private void initUI() {
         TextView titleTextView = findViewById(R.id.tapsell_nativead_title);
-        titleTextView.setTextColor(Theme.getColor(Theme.key_chats_message));
+        titleTextView.setTextColor(Theme.getColor(Theme.key_chats_name));
         TextView descriptionTextView = findViewById(R.id.tapsell_nativead_description);
         descriptionTextView.setTextColor(Theme.getColor(Theme.key_chats_message));
         FrameLayout divider = findViewById(R.id.ad_divider);
@@ -78,6 +79,6 @@ public class NativeDialogAdCell extends FrameLayout {
         TextView sponsoredTextView = findViewById(R.id.tapsell_nativead_sponsored);
         sponsoredTextView.setBackgroundColor(Theme.getColor(Theme.key_dialogRoundCheckBox));
         sponsoredTextView.setTextColor(Theme.getColor(Theme.key_dialogRoundCheckBoxCheck));
-        Log.d("tttt", "configureUI: ");
+        FileLog.d( "configureUI: ");
     }
 }

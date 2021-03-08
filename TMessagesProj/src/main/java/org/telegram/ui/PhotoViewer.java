@@ -156,6 +156,7 @@ import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.own.ads.TapSellBannerAd;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
@@ -2288,6 +2289,11 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 videoPlayerSeekbar.setProgress(progress);
             }
             videoTimelineView.setProgress(progress);
+            addView(TapSellBannerAd.getAd(activityContext)
+                    ,LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT
+                            ,LayoutHelper.WRAP_CONTENT
+                            ,Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL
+                            ,0,0,0,8));
         }
 
         public float getProgress() {
@@ -3098,6 +3104,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     preparePlayer(Uri.fromFile(new File(finalPath)), false, true, editState.savedFilterState);
                 }
             }
+        } else if (id == NotificationCenter.didUpdateConnectionState) {
+
         }
     }
 
