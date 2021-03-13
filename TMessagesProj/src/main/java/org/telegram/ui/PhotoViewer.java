@@ -2225,6 +2225,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         public VideoPlayerControlFrameLayout(@NonNull Context context) {
             super(context);
             tapsellBannerView = new TapSellBannerAd(context).getBannerAd();
+            addView(tapsellBannerView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT
+                    , LayoutHelper.WRAP_CONTENT
+                    , Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL
+                    , 0, 0, 0, 12));
             setWillNotDraw(false);
         }
 
@@ -2295,11 +2299,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 videoPlayerSeekbar.setProgress(progress);
             }
             if (progress==0) {
-                removeView(tapsellBannerView);
-                addView(tapsellBannerView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT
-                        , LayoutHelper.WRAP_CONTENT
-                        , Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL
-                        , 0, 0, 0, 12));
+                tapsellBannerView.setVisibility(VISIBLE);
             }
             videoTimelineView.setProgress(progress);
         }

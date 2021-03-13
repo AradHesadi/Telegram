@@ -65,7 +65,7 @@ public class TapSellBannerAd {
 
         closeButtonImageView.setOnClickListener(v -> {
             Log.d("tttt", "onClick: ");
-            tapsellBannerView.hideBannerView();
+            tapsellBannerView.setVisibility(View.GONE);
         });
     }
 }
