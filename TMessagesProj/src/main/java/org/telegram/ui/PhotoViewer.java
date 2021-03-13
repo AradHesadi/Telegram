@@ -86,6 +86,7 @@ import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.transition.TransitionValues;
 import android.util.FloatProperty;
+import android.util.Log;
 import android.util.Property;
 import android.util.Range;
 import android.util.SparseArray;
@@ -238,6 +239,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import ir.tapsell.sdk.bannerads.TapsellBannerView;
 
 @SuppressWarnings("unchecked")
 public class PhotoViewer implements NotificationCenter.NotificationCenterDelegate, GestureDetector2.OnGestureListener, GestureDetector2.OnDoubleTapListener {
@@ -2217,9 +2220,11 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         private boolean ignoreLayout;
         private int parentWidth;
         private int parentHeight;
+        private final TapsellBannerView tapsellBannerView;
 
         public VideoPlayerControlFrameLayout(@NonNull Context context) {
             super(context);
+            tapsellBannerView = new TapSellBannerAd(context).getBannerAd();
             setWillNotDraw(false);
         }
 
@@ -2281,6 +2286,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         @Override
         protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
             super.onLayout(changed, left, top, right, bottom);
+            Log.d("tttt", "onLayout: ");
             float progress = 0;
             if (videoPlayer != null) {
                 progress = videoPlayer.getCurrentPosition() / (float) videoPlayer.getDuration();
@@ -2288,12 +2294,14 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             if (playerWasReady) {
                 videoPlayerSeekbar.setProgress(progress);
             }
+            if (progress==0) {
+                removeView(tapsellBannerView);
+                addView(tapsellBannerView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT
+                        , LayoutHelper.WRAP_CONTENT
+                        , Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL
+                        , 0, 0, 0, 12));
+            }
             videoTimelineView.setProgress(progress);
-            addView(TapSellBannerAd.getAd(activityContext)
-                    ,LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT
-                            ,LayoutHelper.WRAP_CONTENT
-                            ,Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL
-                            ,0,0,0,8));
         }
 
         public float getProgress() {
@@ -3104,8 +3112,6 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     preparePlayer(Uri.fromFile(new File(finalPath)), false, true, editState.savedFilterState);
                 }
             }
-        } else if (id == NotificationCenter.didUpdateConnectionState) {
-
         }
     }
 

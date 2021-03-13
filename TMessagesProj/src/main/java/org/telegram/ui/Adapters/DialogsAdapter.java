@@ -40,7 +40,6 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
-import org.telegram.own.ui.cell.DialogAdCell;
 import org.telegram.own.ui.cell.NativeDialogAdCell;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
@@ -136,7 +135,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
             position -= 2 + MessagesController.getInstance(currentAccount).hintDialogs.size();
         }
         if (hasAdvertisement) {
-            position -=1;
+            position -= 1;
         }
         if (showArchiveHint) {
             position -= 2;
@@ -261,7 +260,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
             count += 1;
         }
         if (hasAdvertisement)
-            count +=1;
+            count += 1;
         currentCount = count;
         return count;
     }
@@ -675,7 +674,7 @@ public class DialogsAdapter extends RecyclerListView.SelectionAdapter {
 
     @Override
     public int getItemViewType(int i) {
-        if (hasAdvertisement) {
+        if (hasAdvertisement && dialogsCount != 0) {
             if (i == 0) {
                 return 13;
             } else
