@@ -1409,12 +1409,15 @@ public class AlertsCreator {
                     createClearOrDeleteDialogAlert(fragment, clear, admin, true, chat, user, false, checkDeleteForAll, onProcessRunnable);
                     return;
                 } else if (user != null && deleteForAll[0]) {
-                    MessagesStorage.getInstance(fragment.getCurrentAccount()).getMessagesCount(user.id, (count) -> {
-                        if (count >= 50) {
-                            createClearOrDeleteDialogAlert(fragment, clear, admin, true, chat, user, false, checkDeleteForAll, onProcessRunnable);
-                        } else {
-                            if (onProcessRunnable != null) {
-                                onProcessRunnable.run(deleteForAll[0]);
+                    MessagesStorage.getInstance(fragment.getCurrentAccount()).getMessagesCount(user.id, new MessagesStorage.IntCallback() {
+                        @Override
+                        public void run(int count) {
+                            if (count >= 50) {
+                                createClearOrDeleteDialogAlert(fragment, clear, admin, true, chat, user, false, checkDeleteForAll, onProcessRunnable);
+                            } else {
+                                if (onProcessRunnable != null) {
+                                    onProcessRunnable.run(deleteForAll[0]);
+                                }
                             }
                         }
                     });
